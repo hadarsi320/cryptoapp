@@ -1,18 +1,27 @@
 import express from 'express';
 import userRouter from './routers/users';
-// import githubRouter from './routers/github';
-// import guestRouter from './routers/guests';
+import githubRouter from './routers/github';
+import guestRouter from './routers/guests';
 import path from 'path';
+import config from 'config';
+import errorHandler from "./middleware/error/error-handler"
 
-const PORT = 8080;
 const server = express();
 server.set('views', path.resolve(__dirname, 'views'));
 server.set('view engine', 'ejs');
 
-server.use('/users', userRouter);
-// server.use('/github', githubRouter);
-// server.use('/guest', guestRouter);
+// general middlewares
+server.use(express.urlencoded());
 
-server.listen(PORT, () => {
-    console.log(`Listening on port ${PORT}...`)
+// routing
+server.use('/users', userRouter);
+server.use('/github', githubRouter);
+server.use('/guest', guestRouter);
+
+// error middlewares
+server.use(errorHandler)
+
+const port = config.get<number>('app.port');
+server.listen(port, () => {
+    console.log(`Listening on port ${port}...`)
 })
