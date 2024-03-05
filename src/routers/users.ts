@@ -4,7 +4,7 @@ import { addSymbol, dashboard } from '../controllers/users/controller';
 const router = Router();
 
 router.get('/dashboard', dashboard)
-router.get('/symbol', addSymbol)
+router.post('/symbols/add', addSymbol)
 // router.get('/logout', logout)
 
 export default router
