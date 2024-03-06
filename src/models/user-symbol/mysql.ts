@@ -1,5 +1,5 @@
 import { Model } from "./model";
-import { DTO } from "./dto";
+import DTO from "./dto";
 import query from "../../db/mysql";
 import { OkPacketParams } from "mysql2";
 
@@ -28,6 +28,13 @@ class Mysql implements Model {
         WHERE user_id = ?
         `, [userID]);
         return userSymbols
+    }
+
+    async getUniqueSymbols(): Promise<String[]> {
+        const symbols: {symbol: string}[] = await query(`
+            SELECT DISTINCT symbol FROM users_symbols
+        `);
+        return symbols.map(symbol => symbol.symbol);
     }
 }
 

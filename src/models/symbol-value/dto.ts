@@ -1,8 +1,8 @@
 import { ObjectId } from 'mongoose';
 
 export default interface DTO {
-    id: ObjectId,
-    symbol: string,
-    value: number,
-    when: Date,
+    id?: ObjectId;
+    symbol: string;
+    value: number;
+    when: Date;
 }
