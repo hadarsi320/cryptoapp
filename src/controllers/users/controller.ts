@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import getUserSymbolModel from "../../models/user-symbol/factory"
 import getSymbolValueModel from "../../models/symbol-value/factory"
 import DTO from "../../models/user-symbol/dto";
+import config from "config";
 
 export async function dashboard(req: Request, res: Response, next: NextFunction) {
     try {
@@ -9,7 +10,7 @@ export async function dashboard(req: Request, res: Response, next: NextFunction)
         const symbolValues = await Promise.all(userSymbols.map(symbol =>
              getSymbolValueModel().getLatest(symbol.symbol)
         ));
-        res.render('users/dashboard', { symbolValues })
+        res.render('users/dashboard', { userSymbols, symbolValues, io: config.get('app.io') })
     } catch (error) {
         next(error)
     }   

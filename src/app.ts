@@ -1,16 +1,31 @@
+import session from 'express-session';
 import express from 'express';
+import config from 'config';
+import path from 'path';
+
+import errorHandler from "./middleware/error/error-handler"
 import userRouter from './routers/users';
 import githubRouter from './routers/github';
 import guestRouter from './routers/guests';
-import path from 'path';
-import config from 'config';
-import errorHandler from "./middleware/error/error-handler"
+import auth from './middleware/github-auth';
+
 
 const server = express();
 server.set('views', path.resolve(__dirname, 'views'));
 server.set('view engine', 'ejs');
 
 // general middlewares
+server.use(session({
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 * 365 * 5,
+    },
+}));
+server.use(auth.initialize());
+server.use(auth.session());
+
 server.use(express.urlencoded());
 
 // routing

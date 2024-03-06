@@ -14,10 +14,21 @@
   "dependencies": {
     "@types/axios": "^0.14.0",
     "@types/cheerio": "^0.22.35",
+    "@types/express-session": "^1.18.0",
+    "@types/http-errors": "^2.0.4",
+    "@types/passport": "^1.0.16",
+    "@types/passport-github2": "^1.2.9",
+    "@types/socket.io": "^3.0.2",
     "axios": "^1.6.7",
     "cheerio": "^1.0.0-rc.12",
     "ejs": "^3.1.9",
-    "express": "^4.18.3"
+    "express": "^4.18.3",
+    "express-session": "^1.18.0",
+    "http-errors": "^2.0.0",
+    "passport": "^0.7.0",
+    "passport-github2": "^0.1.12",
+    "socket.io": "^4.7.4",
+    "socket.io-client": "^4.7.4"
   },
   "devDependencies": {
     "@types/ejs": "^3.1.5",
@@ -25,6 +36,7 @@
     "@types/mongoose": "^5.11.97",
     "@types/node": "^20.11.24",
     "config": "^3.3.11",
+    "joi": "^17.12.2",
     "mongoose": "^8.2.1",
     "mysql2": "^3.9.2",
     "ts-node": "^10.9.2"
