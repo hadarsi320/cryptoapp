@@ -16,6 +16,7 @@ export async function dashboard(req: Request, res: Response, next: NextFunction)
     }   
 }
 
+ 
 export async function addSymbol(req: Request, res: Response, next: NextFunction) {
     try {
         const userSymbolModel = getUserSymbolModel();
@@ -29,4 +30,10 @@ export async function addSymbol(req: Request, res: Response, next: NextFunction)
     } catch (err) {
         next(err)
     }
+}
+
+export function logout(req: Request, res: Response, next: NextFunction) {
+    req.logout(() => {
+        res.redirect('/')
+    })
 }

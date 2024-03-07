@@ -29,9 +29,9 @@ server.use(auth.session());
 server.use(express.urlencoded());
 
 // routing
+server.use('/', guestRouter);
 server.use('/users', userRouter);
 server.use('/github', githubRouter);
-server.use('/guest', guestRouter);
 
 // error middlewares
 server.use(errorHandler)

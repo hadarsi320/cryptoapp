@@ -1,43 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CryptoApp Dashboard</title>
-    <script src="https://cdn.socket.io/4.7.4/socket.io.min.js" integrity="sha384-Gr6Lu2Ajx28mzwyVR8CFkULdCU7kMlZ9UthllibdOSo6qAiN+yXNHqtgdTvFXMT4" crossorigin="anonymous"></script>
-    <script>
-        const socket = io('ws://<%= io.host %>:<%= io.port %>');
-        socket.on('update your list', message => {
-            console.log(`received an 'update your list' message: ${message}`)
-            const { symbol, value } = message;
-            document.getElementById(`${symbol}-value`).innerHTML = value
-        })
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CryptoApp Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    form {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      padding: 8px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-right: 10px;
+    }
+
+    button {
+      padding: 8px 16px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    @media (max-width: 600px) {
+      table {
+        font-size: 14px;
+      }
+    }
+  </style>
+  <script src="https://cdn.socket.io/4.7.4/socket.io.min.js" integrity="sha384-Gr6Lu2Ajx28mzwyVR8CFkULdCU7kMlZ9UthllibdOSo6qAiN+yXNHqtgdTvFXMT4" crossorigin="anonymous"></script>
+  <script>
+    const socket = io('ws://<%= io.host %>:<%= io.port %>');
+    socket.on('update your list', message => {
+      console.log(`received an 'update your list' message: ${message}`);
+      const { symbol, value } = message;
+      document.getElementById(`${symbol}-value`).innerHTML = value;
+    });
+  </script>
 </head>
 <body>
-    <form method="POST" action="/users/symbols/add">
-        <input type="text" name="symbol" placeholder="crypto token">
-        <button>Add</button>
-    </form>
-
-    <br/>
-    <br/>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Symbol</th>
-                <th>Value</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% userSymbols.forEach(userSymbol => { %>
-                <tr>
-                    <td><%= userSymbol?.symbol %></td>
-                    <td id="<%= userSymbol?.symbol %>-value"><%= symbolValues.find(e => e?.symbol === userSymbol?.symbol)?.value %></td>
-                </tr>
-            <% }) %>
-        </tbody>
-    </table>
+  <h1>CryptoApp Dashboard</h1>
+  <form method="POST" action="/users/symbols/add">
+    <input type="text" name="symbol" placeholder="Crypto token">
+    <button type="submit">Add</button>
+  </form>
+  <a href="/users/logout"><button>Logout</button></a>
+  <table>
+    <thead>
+      <tr>
+        <th>Symbol</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% userSymbols.forEach(userSymbol => { %>
+        <tr>
+          <td><%= userSymbol?.symbol %></td>
+          <td id="<%= userSymbol?.symbol %>-value"><%= symbolValues.find(e => e?.symbol === userSymbol?.symbol)?.value %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
 </body>
 </html>

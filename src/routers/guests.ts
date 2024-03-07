@@ -1,9 +1,8 @@
-import Router from 'express';
+import { Router } from 'express';
+import { welcome } from '../controllers/guests/controller';
 
 const router = Router();
 
-const homepage = () => {}
-
-router.get('/welcome', homepage)
+router.get('/', welcome) 
 
 export default router

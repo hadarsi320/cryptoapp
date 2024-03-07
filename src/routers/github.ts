@@ -1,11 +1,12 @@
-import Router from 'express';
+import { Router } from 'express';
+import auth from '../middleware/github-auth'
 
 const router = Router();
 
-const authenticate = () => {}
-const callback = () => {}
-
-router.get('/authenticate', authenticate)
-router.get('/callback', callback)
+router.get('/authorize', auth.authenticate('github', { scope: [ 'user:email' ]}))
+router.get('/callback', auth.authenticate('github', { 
+    successRedirect: '/users/dashboard', 
+    failureRedirect: '/'
+}))
 
 export default router
